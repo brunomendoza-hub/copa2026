@@ -12,7 +12,6 @@ body{
     color:white;
 }
 
-/* HEADER */
 header{
     text-align:center;
     padding:15px;
@@ -20,11 +19,11 @@ header{
     border-bottom:2px solid #22c55e;
 }
 
-/* GRUPOS */
 .section{
     padding:12px;
 }
 
+/* JOGOS */
 .game{
     background:#1e293b;
     padding:10px;
@@ -36,26 +35,26 @@ header{
 
 /* INPUT */
 input{
-    width:45px;
+    width:40px;
     text-align:center;
 }
 
-/* TABELA */
+/* ✅ TABELA CORRETA */
 table{
     width:100%;
     border-collapse:collapse;
     margin-top:10px;
 }
 
-thead{
-    background:#22c55e;
-    color:#022;
-}
-
-td, th{
+th, td{
+    border:1px solid #334155;
     padding:8px;
     text-align:center;
-    border:1px solid #334155;
+}
+
+th{
+    background:#22c55e;
+    color:#022;
 }
 
 td:first-child{
@@ -66,25 +65,25 @@ td:first-child{
 tbody tr:nth-child(odd){
     background:#1e293b;
 }
+
 tbody tr:nth-child(even){
     background:#020617;
 }
 
-/* CLASSIFICADOS */
+/* TOP 2 */
 .top{
     background:#166534 !important;
     font-weight:bold;
 }
 
-/* RODAPÉ */
 footer{
     text-align:center;
     padding:20px;
-    font-size:12px;
 }
 </style>
 
 </head>
+
 <body>
 
 <header>🏆 Copa do Mundo 2026</header>
@@ -96,7 +95,7 @@ footer{
 <script>
 
 // ====================
-// GRUPOS COMPLETOS
+// GRUPOS
 // ====================
 const grupos = {
 A:["México","África do Sul","Coreia do Sul","Tchéquia"],
@@ -116,60 +115,59 @@ L:["Inglaterra","Croácia","Gana","Panamá"]
 function save(k,v){localStorage.setItem(k,v)}
 function get(k){return localStorage.getItem(k)||""}
 
-// GERAR JOGOS
+// gerar jogos
 function gerarJogos(times){
-    let jogos=[];
+    let j=[];
     for(let i=0;i<times.length;i++){
-        for(let j=i+1;j<times.length;j++){
-            jogos.push([times[i],times[j]]);
+        for(let k=i+1;k<times.length;k++){
+            j.push([times[i],times[k]]);
         }
     }
-    return jogos;
+    return j;
 }
 
-// CALCULAR CLASSIFICAÇÃO
-function calcularTabela(times, grupoId){
+// calcular tabela
+function calcularTabela(times,id){
 
-    let tabela={};
+    let t={};
 
-    times.forEach(t=>{
-        tabela[t]={pts:0,gp:0,gc:0};
+    times.forEach(x=>{
+        t[x]={pts:0,gp:0,gc:0};
     });
 
     let jogos=gerarJogos(times);
 
-    jogos.forEach((j,i)=>{
-        let a=parseInt(get(grupoId+i+"a"));
-        let b=parseInt(get(grupoId+i+"b"));
+    jogos.forEach((m,i)=>{
+        let a=parseInt(get(id+i+'a'));
+        let b=parseInt(get(id+i+'b'));
 
         if(!isNaN(a)&&!isNaN(b)){
-            tabela[j[0]].gp+=a;
-            tabela[j[0]].gc+=b;
-            tabela[j[1]].gp+=b;
-            tabela[j[1]].gc+=a;
+            t[m[0]].gp+=a;
+            t[m[0]].gc+=b;
+            t[m[1]].gp+=b;
+            t[m[1]].gc+=a;
 
-            if(a>b) tabela[j[0]].pts+=3;
-            else if(b>a) tabela[j[1]].pts+=3;
+            if(a>b) t[m[0]].pts+=3;
+            else if(b>a) t[m[1]].pts+=3;
             else{
-                tabela[j[0]].pts+=1;
-                tabela[j[1]].pts+=1;
+                t[m[0]].pts+=1;
+                t[m[1]].pts+=1;
             }
         }
     });
 
-    return Object.entries(tabela).sort((a,b)=>
+    return Object.entries(t).sort((a,b)=>
         b[1].pts-a[1].pts ||
         ((b[1].gp-b[1].gc)-(a[1].gp-a[1].gc))
     );
 }
 
+// ====================
 // RENDER
-let app=document.getElementById("app");
-let numeroJogo=1;
+// ====================
 
-// ====================
-// GRUPOS
-// ====================
+let app=document.getElementById("app");
+let num=1;
 
 for(let g in grupos){
 
@@ -179,14 +177,14 @@ for(let g in grupos){
 
     let jogos=gerarJogos(times);
 
-    // jogos da fase de grupos
-    jogos.forEach((j,i)=>{
+    // jogos
+    jogos.forEach((m,i)=>{
 
         let id=g+i;
 
         app.innerHTML+=`
         <div class="game">
-            <span>(${numeroJogo}) ${j[0]} x ${j[1]}</span>
+            <span>(${num}) ${m[0]} x ${m[1]}</span>
             <span>
                 <input value="${get(id+'a')}" onchange="save('${id}a',this.value);location.reload()"> x
                 <input value="${get(id+'b')}" onchange="save('${id}b',this.value);location.reload()">
@@ -194,13 +192,13 @@ for(let g in grupos){
         </div>
         `;
 
-        numeroJogo++;
+        num++;
     });
 
-    // tabela
+    // 🔥 TABELA CORRETA
     let classif=calcularTabela(times,g);
 
-    app.innerHTML+=`
+    let tabelaHTML = `
     <table>
     <thead>
         <tr>
@@ -212,38 +210,30 @@ for(let g in grupos){
     <tbody>
     `;
 
-    classif.forEach((t,i)=>{
-        let saldo=t[1].gp - t[1].gc;
+    for(let i=0;i<classif.length;i++){
 
-        app.innerHTML+=`
+        let nome = classif[i][0];
+        let dados = classif[i][1];
+
+        let saldo = dados.gp - dados.gc;
+
+        tabelaHTML += `
         <tr class="${i<2?'top':''}">
-            <td>${t[0]}</td>
-            <td>${t[1].pts}</td>
+            <td>${nome}</td>
+            <td>${dados.pts}</td>
             <td>${saldo}</td>
         </tr>
         `;
-    });
+    }
 
-    app.innerHTML+=`</tbody></table></div>`;
+    tabelaHTML += `</tbody></table>`;
+
+    app.innerHTML += tabelaHTML;
+
+    app.innerHTML += `</div>`;
 }
-
-// ====================
-// FASE FINAL (CORRETA)
-// ====================
-
-app.innerHTML+=`
-<div class="section">
-<h2>Fase Eliminatória</h2>
-<p style="color:#94a3b8;">
-A fase final será liberada automaticamente quando todos os jogos da fase de grupos forem preenchidos.
-</p>
-
-<p>Jogos totais: 104 ✅</p>
-</div>
-`;
 
 </script>
 
 </body>
 </html>
-``
