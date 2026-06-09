@@ -1,63 +1,109 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head> <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.png">
-<meta name="theme-color" content="#22c55e">
-``
+<!DOCTYPE html><!DOCTYPEpt-br">
+<head>
 <meta charset="UTF-8">
 <title>Copa do Mundo 2026</title>
 
 <style>
+
+/* FUNDO */
 body{
     font-family: Arial;
     margin:0;
-    background:#020617;
+    background: radial-gradient(circle at top, #1e293b, #020617 80%);
     color:white;
 }
 
+/* HEADER */
 header{
-    text-align:center;
+    background: linear-gradient(90deg, #020617, #0f172a);
     padding:15px;
     font-size:22px;
-    border-bottom:2px solid #22c55e;
+    text-align:center;
+    letter-spacing:1px;
+    border-bottom:3px solid #22c55e;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
+/* CARDS */
 .section{
-    padding:12px;
+    background: rgba(2,6,23,0.85);
+    padding:15px;
+    margin:10px;
+    border-radius:12px;
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.4);
+    backdrop-filter: blur(6px);
+    animation: aparecer 0.5s ease;
+}
+
+@keyframes aparecer{
+    from{
+        opacity:0;
+        transform: translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+
+/* TITULO GRUPO */
+h2{
+    border-left:4px solid #22c55e;
+    padding-left:10px;
 }
 
 /* JOGOS */
 .game{
     background:#1e293b;
     padding:10px;
-    margin:6px 0;
-    border-radius:8px;
+    margin:8px 0;
+    border-radius:10px;
     display:flex;
     justify-content:space-between;
+    transition:0.25s;
+}
+
+.game:hover{
+    transform: scale(1.03);
+    background:#334155;
 }
 
 /* INPUT */
 input{
-    width:40px;
+    width:42px;
+    padding:5px;
+    border-radius:6px;
+    border:none;
     text-align:center;
+    font-weight:bold;
+    background:#0f172a;
+    color:white;
 }
 
-/* ✅ TABELA CORRETA */
+input:focus{
+    outline:none;
+    background:#22c55e;
+    color:#022;
+    transform: scale(1.1);
+}
+
+/* TABELA */
 table{
     width:100%;
     border-collapse:collapse;
-    margin-top:10px;
+    margin-top:12px;
+    border-radius:10px;
+    overflow:hidden;
 }
 
-th, td{
-    border:1px solid #334155;
-    padding:8px;
-    text-align:center;
-}
-
-th{
+thead{
     background:#22c55e;
     color:#022;
+}
+
+td, th{
+    padding:10px;
+    text-align:center;
 }
 
 td:first-child{
@@ -68,23 +114,29 @@ td:first-child{
 tbody tr:nth-child(odd){
     background:#1e293b;
 }
-
 tbody tr:nth-child(even){
     background:#020617;
 }
 
-/* TOP 2 */
+tbody tr:hover{
+    background:#334155;
+}
+
+/* CLASSIFICADOS */
 .top{
-    background:#166534 !important;
+    background:#14532d !important;
+    color:#bbf7d0;
     font-weight:bold;
 }
 
+/* FOOTER */
 footer{
     text-align:center;
     padding:20px;
+    font-size:12px;
 }
-</style>
 
+</style>
 </head>
 
 <body>
@@ -115,52 +167,57 @@ K:["Portugal","Colômbia","Uzbequistão","Congo"],
 L:["Inglaterra","Croácia","Gana","Panamá"]
 };
 
-function save(k,v){localStorage.setItem(k,v)}
-function get(k){return localStorage.getItem(k)||""}
-
-// gerar jogos
-function gerarJogos(times){
-    let j=[];
-    for(let i=0;i<times.length;i++){
-        for(let k=i+1;k<times.length;k++){
-            j.push([times[i],times[k]]);
-        }
-    }
-    return j;
+// STORAGE
+function save(k,v){
+    localStorage.setItem(k,v);
+}
+function get(k){
+    return localStorage.getItem(k)||"";
 }
 
-// calcular tabela
-function calcularTabela(times,id){
+// GERAR JOGOS
+function gerarJogos(times){
+    let jogos=[];
+    for(let i=0;i<times.length;i++){
+        for(let j=i+1;j<times.length;j++){
+            jogos.push([times[i],times[j]]);
+        }
+    }
+    return jogos;
+}
 
-    let t={};
+// CALCULAR TABELA
+function calcularTabela(times,grupoId){
 
-    times.forEach(x=>{
-        t[x]={pts:0,gp:0,gc:0};
+    let tabela={};
+
+    times.forEach(t=>{
+        tabela[t]={pts:0,gp:0,gc:0};
     });
 
     let jogos=gerarJogos(times);
 
-    jogos.forEach((m,i)=>{
-        let a=parseInt(get(id+i+'a'));
-        let b=parseInt(get(id+i+'b'));
+    jogos.forEach((j,i)=>{
+        let a=parseInt(get(grupoId+i+"a"));
+        let b=parseInt(get(grupoId+i+"b"));
 
-        if(!isNaN(a)&&!isNaN(b)){
-            t[m[0]].gp+=a;
-            t[m[0]].gc+=b;
-            t[m[1]].gp+=b;
-            t[m[1]].gc+=a;
+        if(!isNaN(a) && !isNaN(b)){
+            tabela[j[0]].gp+=a;
+            tabela[j[0]].gc+=b;
+            tabela[j[1]].gp+=b;
+            tabela[j[1]].gc+=a;
 
-            if(a>b) t[m[0]].pts+=3;
-            else if(b>a) t[m[1]].pts+=3;
+            if(a>b) tabela[j[0]].pts+=3;
+            else if(b>a) tabela[j[1]].pts+=3;
             else{
-                t[m[0]].pts+=1;
-                t[m[1]].pts+=1;
+                tabela[j[0]].pts+=1;
+                tabela[j[1]].pts+=1;
             }
         }
     });
 
-    return Object.entries(t).sort((a,b)=>
-        b[1].pts-a[1].pts ||
+    return Object.entries(tabela).sort((a,b)=>
+        b[1].pts - a[1].pts ||
         ((b[1].gp-b[1].gc)-(a[1].gp-a[1].gc))
     );
 }
@@ -180,17 +237,19 @@ for(let g in grupos){
 
     let jogos=gerarJogos(times);
 
-    // jogos
-    jogos.forEach((m,i)=>{
+    // JOGOS
+    jogos.forEach((j,i)=>{
 
         let id=g+i;
 
         app.innerHTML+=`
         <div class="game">
-            <span>(${num}) ${m[0]} x ${m[1]}</span>
+            <span>(${num}) ${j[0]} x ${j[1]}</span>
             <span>
-                <input value="${get(id+'a')}" onchange="save('${id}a',this.value);location.reload()"> x
-                <input value="${get(id+'b')}" onchange="save('${id}b',this.value);location.reload()">
+                <input value="${get(id+'a')}" 
+                onchange="save('${id}a',this.value);location.reload()"> x
+                <input value="${get(id+'b')}" 
+                onchange="save('${id}b',this.value);location.reload()">
             </span>
         </div>
         `;
@@ -198,10 +257,10 @@ for(let g in grupos){
         num++;
     });
 
-    // 🔥 TABELA CORRETA
+    // ✅ TABELA CORRETA
     let classif=calcularTabela(times,g);
 
-    let tabelaHTML = `
+    let htmlTabela = `
     <table>
     <thead>
         <tr>
@@ -220,7 +279,7 @@ for(let g in grupos){
 
         let saldo = dados.gp - dados.gc;
 
-        tabelaHTML += `
+        htmlTabela += `
         <tr class="${i<2?'top':''}">
             <td>${nome}</td>
             <td>${dados.pts}</td>
@@ -229,9 +288,9 @@ for(let g in grupos){
         `;
     }
 
-    tabelaHTML += `</tbody></table>`;
+    htmlTabela += `</tbody></table>`;
 
-    app.innerHTML += tabelaHTML;
+    app.innerHTML += htmlTabela;
 
     app.innerHTML += `</div>`;
 }
@@ -240,3 +299,4 @@ for(let g in grupos){
 
 </body>
 </html>
+
