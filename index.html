@@ -197,31 +197,40 @@ for(let g in grupos){
     });
 
     // classificação
-    let classif=calcular(times,g);
+  
+let classif = calcular(times, g);
+
+app.innerHTML += `
+<table>
+<thead>
+<tr>
+    <th>Time</th>
+    <th>Pontos</th>
+    <th>Saldo</th>
+</tr>
+</thead>
+<tbody>
+`;
+
+classif.forEach((t,i)=>{
+
+    let saldo = t[1].gp - t[1].gc;
 
     app.innerHTML += `
-    <table>
-    <thead>
-    <tr>
-        <th>Time</th>
-        <th>Pontos</th>
-        <th>Saldo</th>
+    <tr class="${i < 2 ? 'top' : ''}">
+        <td>${t[0]}</td>
+        <td>${t[1].pts}</td>
+        <td>${saldo}</td>
     </tr>
-    </thead>
-    <tbody>
     `;
+});
 
-    classif.forEach((t,i)=>{
+// ✅ FECHAMENTO CORRETO (ESSENCIAL)
+app.innerHTML += `
+</tbody>
+</table>
+`;
 
-        let saldo=t[1].gp - t[1].gc;
-
-        app.innerHTML += `
-        <tr class="${i<2?'top':''}">
-            <td>${t[0]}</td>
-            <td>${t[1].pts}</td>
-            <td>${saldo}</td>
-        </tr>`;
-    });
 
     app.innerHTML += `</tbody></table></div>`;
 }
