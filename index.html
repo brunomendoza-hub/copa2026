@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Copa do Mundo 2026</title>
+
+<style>
+
+body{
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    background: linear-gradient(180deg, #0f172a, #020617);
+    color: #e5e7eb;
+}
+
+/* HEADER ESPN */
+header{
+    background: #0b0f19;
+    padding: 16px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    border-bottom: 2px solid #22c55e;
+    letter-spacing: 1px;
+}
+
+/* CONTAINER */
+.section{
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+/* CARDS (GRUPOS) */
+.section h2{
+    margin-bottom: 10px;
+}
+
+/* JOGOS */
+.game{
+    background:#1e293b;
+    padding:10px;
+    margin:6px 0;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition: 0.2s;
+}
+
+.game:hover{
+    background:#334155;
+}
+
+input{
+    width:42px;
+    padding:4px;
+    border-radius:6px;
+    border:none;
+    text-align:center;
+    font-weight:bold;
+}
+
+/* TABELA */
+table{
+    width:100%;
+    margin-top:12px;
+    border-collapse:collapse;
+    overflow:hidden;
+    border-radius:10px;
+}
+
+th{
+    background:#22c55e;
+    padding:8px;
+    font-weight:bold;
+    color:#022c22;
+}
+
+td{
+    padding:8px;
+    text-align:center;
+    border-top:1px solid #334155;
+}
+
+/* TIME ALINHADO */
+td:first-child{
+    text-align:left;
+    padding-left:10px;
+}
+
+/* TOP 2 CLASSIFICADOS */
+.top{
+    background:#14532d !important;
+    font-weight:bold;
+}
+
+/* ELIMINADOS */
+.down{
+    opacity:0.7;
+}
+
+/* TÍTULOS FASE */
+h3{
+    margin-top:15px;
+    color:#22c55e;
+}
+
+/* RODAPÉ */
+footer{
+    text-align:center;
+    padding:20px;
+    font-size:12px;
+    color:#64748b;
+
+}
+</style>
+
+</head>
+
+<body>
+
+<header>🏆 Copa do Mundo 2026</header>
+
+<div id="app"></div>
+
+<footer>Desenvolvido por Bruno Mendoza</footer>
+
+<script>
+
+// GRUPOS
+const grupos={
+A:["México","África do Sul","Coreia do Sul","Tchéquia"],
+B:["Canadá","Bósnia","Catar","Suíça"],
+C:["Brasil","Marrocos","Haiti","Escócia"]
+};
+
+// storage
+function save(k,v){localStorage.setItem(k,v)}
+function get(k){return localStorage.getItem(k)||""}
+
+// gerar jogos
+function jogos(times){
+    let j=[]
+    for(let i=0;i<times.length;i++){
+        for(let k=i+1;k<times.length;k++){
+            j.push([times[i],times[k]])
+        }
+    }
+    return j
+}
+
+// calcular tabela
+function tabela(times,id){
+    let t={}
+
+    times.forEach(x=>{
+        t[x]={pts:0,gp:0,gc:0}
+    })
+
+    let j=jogos(times)
+
+    j.forEach((m,i)=>{
+        let a=parseInt(get(id+i+'a'))
+        let b=parseInt(get(id+i+'b'))
+
+        if(!isNaN(a)&&!isNaN(b)){
+            t[m[0]].gp+=a
+            t[m[0]].gc+=b
+            t[m[1]].gp+=b
+            t[m[1]].gc+=a
+
+            if(a>b) t[m[0]].pts+=3
+            else if(b>a) t[m[1]].pts+=3
+            else{
+                t[m[0]].pts+=1
+                t[m[1]].pts+=1
+            }
+        }
+    })
+
+    return Object.entries(t).sort((a,b)=>
+        b[1].pts-a[1].pts ||
+        (b[1].gp-b[1].gc)-(a[1].gp-a[1].gc)
+    )
+}
+
+// RENDER
+let app=document.getElementById("app")
+let count=1
+
+for(let g in grupos){
+
+    let times=grupos[g]
+
+    app.innerHTML+=`<div class="section"><h2>Grupo ${g}</h2>`
+
+    let j=jogos(times)
+
+    j.forEach((m,i)=>{
+        let id=g+i
+
+        app.innerHTML+=`
+        <div class="game">
+            <span>(${count}) ${m[0]} x ${m[1]}</span>
+            <span>
+                <input value="${get(id+'a')}" onchange="save('${id}a',this.value);location.reload()">
+                x
+                <input value="${get(id+'b')}" onchange="save('${id}b',this.value);location.reload()">
+            </span>
+        </div>`
+        count++
+    })
+
+    // tabela CORRETA
+    let classif=tabela(times,g)
+
+    app.innerHTML+=`
+    <table>
+        <tr>
+            <th>Time</th>
+            <th>Pontos</th>
+            <th>Saldo</th>
+        </tr>
+    `
+
+    classif.forEach(t=>{
+        let sg=t[1].gp - t[1].gc
+
+        app.innerHTML+=`
+        <tr>
+            <td>${t[0]}</td>
+            <td>${t[1].pts}</td>
+            <td>${sg}</td>
+        </tr>`
+    })
+
+    app.innerHTML+=`</table></div>`
+}
+
+// FASE FINAL CORRETA
+app.innerHTML+=`<div class="section"><h2>Fase Final</h2>`
+
+function fase(nome,total,start){
+    app.innerHTML+=`<h3>${nome}</h3>`
+    for(let i=0;i<total;i++){
+        let n=start+i
+        app.innerHTML+=`
+        <div class="game">
+            <span>(${n}) ______ x ______</span>
+            <span>
+                <input onchange="save('${n}a',this.value)"> x
+                <input onchange="save('${n}b',this.value)">
+            </span>
+        </div>`
+    }
+}
+
+fase("32 avos",16,73)
+fase("Oitavas",8,89)
+fase("Quartas",4,97)
+fase("Semifinal",2,101)
+
+app.innerHTML+=`
+<h3>3º Lugar</h3>
+<div class="game">
+    <span>(103)</span>
+    <span>
+        <input onchange="save('103a',this.value)"> x
+        <input onchange="save('103b',this.value)">
+    </span>
+</div>
+
+<h3>Final</h3>
+<div class="game">
+    <span>(104)</span>
+    <span>
+        <input onchange="save('104a',this.value)"> x
+        <input onchange="save('104b',this.value)">
+    </span>
+</div>
+</div>
+`
+
+</script>
+
+</body>
+</html>
+``
