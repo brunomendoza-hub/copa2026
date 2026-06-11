@@ -1,302 +1,101 @@
-<!DOCTYPE html><!DOCTYPEpt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Copa do Mundo 2026</title>
+<title>Copa do Mundo 2026 🇧🇷</title>
 
 <style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #006400, #009c3b);
+    color: white;
+    text-align: center;
+    margin: 0;
+  }
 
-/* FUNDO */
-body{
-    font-family: Arial;
-    margin:0;
-    background: radial-gradient(circle at top, #1e293b, #020617 80%);
-    color:white;
-}
+  h1 {
+    background-color: #ffdf00;
+    color: #006400;
+    padding: 15px;
+    margin: 0;
+  }
 
-/* HEADER */
-header{
-    background: linear-gradient(90deg, #020617, #0f172a);
-    padding:15px;
-    font-size:22px;
-    text-align:center;
-    letter-spacing:1px;
-    border-bottom:3px solid #22c55e;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
+  table {
+    margin: 30px auto;
+    border-collapse: collapse;
+    width: 80%;
+    max-width: 600px;
+    background-color: #008000;
+    border-radius: 15px;
+    overflow: hidden;
+  }
 
-/* CARDS */
-.section{
-    background: rgba(2,6,23,0.85);
-    padding:15px;
-    margin:10px;
-    border-radius:12px;
-    box-shadow: 0px 4px 20px rgba(0,0,0,0.4);
-    backdrop-filter: blur(6px);
-    animation: aparecer 0.5s ease;
-}
+  th {
+    background-color: #ffdf00;
+    color: #006400;
+    padding: 12px;
+    font-size: 18px;
+  }
 
-@keyframes aparecer{
-    from{
-        opacity:0;
-        transform: translateY(10px);
-    }
-    to{
-        opacity:1;
-        transform: translateY(0);
-    }
-}
+  td {
+    padding: 15px;
+    font-size: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+  }
 
-/* TITULO GRUPO */
-h2{
-    border-left:4px solid #22c55e;
-    padding-left:10px;
-}
+  tr:hover {
+    background-color: #00a000;
+    cursor: pointer;
+  }
 
-/* JOGOS */
-.game{
-    background:#1e293b;
-    padding:10px;
-    margin:8px 0;
-    border-radius:10px;
-    display:flex;
-    justify-content:space-between;
-    transition:0.25s;
-}
+  .horario {
+    font-weight: bold;
+    color: #ffdf00;
+  }
 
-.game:hover{
-    transform: scale(1.03);
-    background:#334155;
-}
-
-/* INPUT */
-input{
-    width:42px;
-    padding:5px;
-    border-radius:6px;
-    border:none;
-    text-align:center;
-    font-weight:bold;
-    background:#0f172a;
-    color:white;
-}
-
-input:focus{
-    outline:none;
-    background:#22c55e;
-    color:#022;
-    transform: scale(1.1);
-}
-
-/* TABELA */
-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:12px;
-    border-radius:10px;
-    overflow:hidden;
-}
-
-thead{
-    background:#22c55e;
-    color:#022;
-}
-
-td, th{
-    padding:10px;
-    text-align:center;
-}
-
-td:first-child{
-    text-align:left;
-}
-
-/* LINHAS */
-tbody tr:nth-child(odd){
-    background:#1e293b;
-}
-tbody tr:nth-child(even){
-    background:#020617;
-}
-
-tbody tr:hover{
-    background:#334155;
-}
-
-/* CLASSIFICADOS */
-.top{
-    background:#14532d !important;
-    color:#bbf7d0;
-    font-weight:bold;
-}
-
-/* FOOTER */
-footer{
-    text-align:center;
-    padding:20px;
-    font-size:12px;
-}
-
+  .brasil {
+    background-color: #004d00;
+  }
 </style>
+
 </head>
 
 <body>
 
-<header>🏆 Copa do Mundo 2026</header>
+<h1>⚽ Tabela da Copa 2026 🇧🇷</h1>
 
-<div id="app"></div>
+<table>
+  <tr>
+    <th>Time</th>
+    <th>Horário</th>
+    <th>Time</th>
+  </tr>
 
-<footer>Desenvolvido por Bruno Mendoza</footer>
+  <tr class="brasil">
+    <td>Brasil 🇧🇷</td>
+    <td class="horario">19:00</td>
+    <td>Marrocos 🇲🇦</td>
+  </tr>
 
-<script>
+  <tr>
+    <td>Haiti 🇭🇹</td>
+    <td class="horario">21:30</td>
+    <td>Escócia 🏴</td>
+  </tr>
 
-// ====================
-// GRUPOS
-// ====================
-const grupos = {
-A:["México","África do Sul","Coreia do Sul","Tchéquia"],
-B:["Canadá","Bósnia","Catar","Suíça"],
-C:["Brasil","Marrocos","Haiti","Escócia"],
-D:["EUA","Paraguai","Austrália","Turquia"],
-E:["Alemanha","Equador","Costa do Marfim","Curaçao"],
-F:["Holanda","Japão","Suécia","Tunísia"],
-G:["Bélgica","Egito","Irã","Nova Zelândia"],
-H:["Espanha","Uruguai","Arábia Saudita","Cabo Verde"],
-I:["França","Senegal","Noruega","Iraque"],
-J:["Argentina","Argélia","Áustria","Jordânia"],
-K:["Portugal","Colômbia","Uzbequistão","Congo"],
-L:["Inglaterra","Croácia","Gana","Panamá"]
-};
+  <tr class="brasil">
+    <td>Brasil 🇧🇷</td>
+    <td class="horario">21:30</td>
+    <td>Haiti 🇭🇹</td>
+  </tr>
 
-// STORAGE
-function save(k,v){
-    localStorage.setItem(k,v);
-}
-function get(k){
-    return localStorage.getItem(k)||"";
-}
+  <tr class="brasil">
+    <td>Brasil 🇧🇷</td>
+    <td class="horario">19:00</td>
+    <td>Escócia 🏴</td>
+  </tr>
 
-// GERAR JOGOS
-function gerarJogos(times){
-    let jogos=[];
-    for(let i=0;i<times.length;i++){
-        for(let j=i+1;j<times.length;j++){
-            jogos.push([times[i],times[j]]);
-        }
-    }
-    return jogos;
-}
-
-// CALCULAR TABELA
-function calcularTabela(times,grupoId){
-
-    let tabela={};
-
-    times.forEach(t=>{
-        tabela[t]={pts:0,gp:0,gc:0};
-    });
-
-    let jogos=gerarJogos(times);
-
-    jogos.forEach((j,i)=>{
-        let a=parseInt(get(grupoId+i+"a"));
-        let b=parseInt(get(grupoId+i+"b"));
-
-        if(!isNaN(a) && !isNaN(b)){
-            tabela[j[0]].gp+=a;
-            tabela[j[0]].gc+=b;
-            tabela[j[1]].gp+=b;
-            tabela[j[1]].gc+=a;
-
-            if(a>b) tabela[j[0]].pts+=3;
-            else if(b>a) tabela[j[1]].pts+=3;
-            else{
-                tabela[j[0]].pts+=1;
-                tabela[j[1]].pts+=1;
-            }
-        }
-    });
-
-    return Object.entries(tabela).sort((a,b)=>
-        b[1].pts - a[1].pts ||
-        ((b[1].gp-b[1].gc)-(a[1].gp-a[1].gc))
-    );
-}
-
-// ====================
-// RENDER
-// ====================
-
-let app=document.getElementById("app");
-let num=1;
-
-for(let g in grupos){
-
-    let times=grupos[g];
-
-    app.innerHTML+=`<div class="section"><h2>Grupo ${g}</h2>`;
-
-    let jogos=gerarJogos(times);
-
-    // JOGOS
-    jogos.forEach((j,i)=>{
-
-        let id=g+i;
-
-        app.innerHTML+=`
-        <div class="game">
-            <span>(${num}) ${j[0]} x ${j[1]}</span>
-            <span>
-                <input value="${get(id+'a')}" 
-                onchange="save('${id}a',this.value);location.reload()"> x
-                <input value="${get(id+'b')}" 
-                onchange="save('${id}b',this.value);location.reload()">
-            </span>
-        </div>
-        `;
-
-        num++;
-    });
-
-    // ✅ TABELA CORRETA
-    let classif=calcularTabela(times,g);
-
-    let htmlTabela = `
-    <table>
-    <thead>
-        <tr>
-            <th>Time</th>
-            <th>Pontos</th>
-            <th>Saldo</th>
-        </tr>
-    </thead>
-    <tbody>
-    `;
-
-    for(let i=0;i<classif.length;i++){
-
-        let nome = classif[i][0];
-        let dados = classif[i][1];
-
-        let saldo = dados.gp - dados.gc;
-
-        htmlTabela += `
-        <tr class="${i<2?'top':''}">
-            <td>${nome}</td>
-            <td>${dados.pts}</td>
-            <td>${saldo}</td>
-        </tr>
-        `;
-    }
-
-    htmlTabela += `</tbody></table>`;
-
-    app.innerHTML += htmlTabela;
-
-    app.innerHTML += `</div>`;
-}
-
-</script>
+</table>
 
 </body>
 </html>
-
