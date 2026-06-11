@@ -1,4 +1,5 @@
-<!DOCTYPE html><!DOCTYPEpt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <title>Copa do Mundo 2026</title>
@@ -9,24 +10,25 @@
 body{
     font-family: Arial;
     margin:0;
-    background: radial-gradient(circle at top, #1e293b, #020617 80%);
+    background: radial-gradient(circle at top, #009c3b, #006400 80%);
     color:white;
 }
 
 /* HEADER */
 header{
-    background: linear-gradient(90deg, #020617, #0f172a);
+    background: linear-gradient(90deg, #006400, #009c3b);
     padding:15px;
     font-size:22px;
     text-align:center;
     letter-spacing:1px;
-    border-bottom:3px solid #22c55e;
+    border-bottom:3px solid #ffdf00;
     box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    color:#ffdf00;
 }
 
 /* CARDS */
 .section{
-    background: rgba(2,6,23,0.85);
+    background: rgba(0,100,0,0.9);
     padding:15px;
     margin:10px;
     border-radius:12px;
@@ -48,13 +50,13 @@ header{
 
 /* TITULO GRUPO */
 h2{
-    border-left:4px solid #22c55e;
+    border-left:4px solid #ffdf00;
     padding-left:10px;
 }
 
 /* JOGOS */
 .game{
-    background:#1e293b;
+    background:#008000;
     padding:10px;
     margin:8px 0;
     border-radius:10px;
@@ -65,7 +67,7 @@ h2{
 
 .game:hover{
     transform: scale(1.03);
-    background:#334155;
+    background:#00a000;
 }
 
 /* INPUT */
@@ -76,14 +78,14 @@ input{
     border:none;
     text-align:center;
     font-weight:bold;
-    background:#0f172a;
+    background:#004d00;
     color:white;
 }
 
 input:focus{
     outline:none;
-    background:#22c55e;
-    color:#022;
+    background:#ffdf00;
+    color:#006400;
     transform: scale(1.1);
 }
 
@@ -97,8 +99,8 @@ table{
 }
 
 thead{
-    background:#22c55e;
-    color:#022;
+    background:#ffdf00;
+    color:#006400;
 }
 
 td, th{
@@ -112,20 +114,20 @@ td:first-child{
 
 /* LINHAS */
 tbody tr:nth-child(odd){
-    background:#1e293b;
+    background:#006400;
 }
 tbody tr:nth-child(even){
-    background:#020617;
+    background:#004d00;
 }
 
 tbody tr:hover{
-    background:#334155;
+    background:#009c3b;
 }
 
 /* CLASSIFICADOS */
 .top{
-    background:#14532d !important;
-    color:#bbf7d0;
+    background:#003300 !important;
+    color:#ffdf00;
     font-weight:bold;
 }
 
@@ -257,7 +259,7 @@ for(let g in grupos){
         num++;
     });
 
-    // ✅ TABELA CORRETA
+    // TABELA
     let classif=calcularTabela(times,g);
 
     let htmlTabela = `
@@ -299,3 +301,4 @@ for(let g in grupos){
 
 </body>
 </html>
+``
