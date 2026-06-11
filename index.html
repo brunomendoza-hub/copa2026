@@ -6,7 +6,6 @@
 
 <style>
 
-/* FUNDO */
 body{
     font-family: Arial;
     margin:0;
@@ -14,7 +13,6 @@ body{
     color:white;
 }
 
-/* HEADER */
 header{
     background: linear-gradient(90deg, #006400, #009c3b);
     padding:15px;
@@ -23,13 +21,11 @@ header{
     color:#ffdf00;
 }
 
-/* ANIMAÇÃO */
 @keyframes aparecer{
     from{opacity:0; transform:translateY(10px);}
     to{opacity:1; transform:translateY(0);}
 }
 
-/* CARDS */
 .section{
     background: rgba(0,100,0,0.9);
     padding:15px;
@@ -38,13 +34,11 @@ header{
     animation: aparecer 0.4s ease;
 }
 
-/* TITULO */
 h2{
     border-left:4px solid #ffdf00;
     padding-left:10px;
 }
 
-/* JOGO */
 .game{
     background:#008000;
     padding:10px 15px;
@@ -60,7 +54,6 @@ h2{
     font-size:12px;
 }
 
-/* INPUT */
 input{
     width:42px;
     text-align:center;
@@ -74,7 +67,6 @@ input:focus{
     color:#006400;
 }
 
-/* TABELA */
 table{
     width:100%;
     margin-top:10px;
@@ -115,7 +107,6 @@ footer{
 
 <script>
 
-// GRUPOS
 const grupos = {
 A:["México","África do Sul","Coreia do Sul","Tchéquia"],
 B:["Canadá","Bósnia","Catar","Suíça"],
@@ -131,55 +122,45 @@ K:["Portugal","Colômbia","Uzbequistão","Congo"],
 L:["Inglaterra","Croácia","Gana","Panamá"]
 };
 
-// ✅ JOGOS POR GRUPO (ORDEM FIFA)
 const jogosFixos = {
-A:[
-["México","África do Sul"],
-["Coreia do Sul","Tchéquia"],
-["Tchéquia","África do Sul"],
-["México","Coreia do Sul"],
-["Tchéquia","México"],
-["África do Sul","Coreia do Sul"]
-],
-
-B:[
-["Canadá","Bósnia"],
-["Catar","Suíça"],
-["Suíça","Bósnia"],
-["Canadá","Catar"],
-["Bósnia","Catar"],
-["Suíça","Canadá"]
-],
-
-C:[
-["Brasil","Marrocos"],
-["Haiti","Escócia"],
-["Escócia","Marrocos"],
-["Brasil","Haiti"],
-["Marrocos","Haiti"],
-["Escócia","Brasil"]
-],
-
-// pode manter padrão pros outros (ou definir depois)
+A:[["México","África do Sul"],["Coreia do Sul","Tchéquia"],["Tchéquia","África do Sul"],["México","Coreia do Sul"],["Tchéquia","México"],["África do Sul","Coreia do Sul"]],
+B:[["Canadá","Bósnia"],["Catar","Suíça"],["Suíça","Bósnia"],["Canadá","Catar"],["Bósnia","Catar"],["Suíça","Canadá"]],
+C:[["Brasil","Marrocos"],["Haiti","Escócia"],["Escócia","Marrocos"],["Brasil","Haiti"],["Marrocos","Haiti"],["Escócia","Brasil"]],
+D:[["EUA","Paraguai"],["Austrália","Turquia"],["EUA","Austrália"],["Turquia","Paraguai"],["Paraguai","Austrália"],["Turquia","EUA"]],
+E:[["Alemanha","Equador"],["Costa do Marfim","Curaçao"],["Equador","Curaçao"],["Alemanha","Costa do Marfim"],["Curaçao","Alemanha"],["Equador","Costa do Marfim"]],
+F:[["Holanda","Japão"],["Suécia","Tunísia"],["Holanda","Suécia"],["Japão","Tunísia"],["Tunísia","Holanda"],["Suécia","Japão"]],
+G:[["Bélgica","Egito"],["Irã","Nova Zelândia"],["Bélgica","Irã"],["Egito","Nova Zelândia"],["Nova Zelândia","Bélgica"],["Irã","Egito"]],
+H:[["Espanha","Uruguai"],["Arábia Saudita","Cabo Verde"],["Espanha","Arábia Saudita"],["Uruguai","Cabo Verde"],["Cabo Verde","Espanha"],["Uruguai","Arábia Saudita"]],
+I:[["França","Senegal"],["Noruega","Iraque"],["França","Noruega"],["Senegal","Iraque"],["Iraque","França"],["Noruega","Senegal"]],
+J:[["Argentina","Argélia"],["Áustria","Jordânia"],["Argentina","Áustria"],["Argélia","Jordânia"],["Jordânia","Argentina"],["Áustria","Argélia"]],
+K:[["Portugal","Colômbia"],["Uzbequistão","Congo"],["Portugal","Uzbequistão"],["Colômbia","Congo"],["Congo","Portugal"],["Uzbequistão","Colômbia"]],
+L:[["Inglaterra","Croácia"],["Gana","Panamá"],["Inglaterra","Gana"],["Croácia","Panamá"],["Panamá","Inglaterra"],["Croácia","Gana"]]
 };
 
-// ✅ AGENDA (AGORA CASA COM JOGO CERTO)
 const agenda = {
 "A0":"11/06 16:00","A1":"11/06 23:00","A2":"18/06 13:00","A3":"18/06 22:00","A4":"24/06 22:00","A5":"24/06 22:00",
 "B0":"12/06 16:00","B1":"13/06 16:00","B2":"18/06 16:00","B3":"18/06 19:00","B4":"24/06 16:00","B5":"24/06 16:00",
-"C0":"13/06 19:00","C1":"13/06 22:00","C2":"19/06 19:00","C3":"19/06 22:00","C4":"24/06 19:00","C5":"24/06 19:00"
+"C0":"13/06 19:00","C1":"13/06 22:00","C2":"19/06 19:00","C3":"19/06 22:00","C4":"24/06 19:00","C5":"24/06 19:00",
+
+"D0":"12/06 22:00","D1":"14/06 01:00","D2":"19/06 16:00","D3":"20/06 01:00","D4":"25/06 23:00","D5":"25/06 23:00",
+"E0":"14/06 14:00","E1":"14/06 20:00","E2":"20/06 13:00","E3":"20/06 17:00","E4":"25/06 19:00","E5":"25/06 19:00",
+"F0":"14/06 17:00","F1":"14/06 23:00","F2":"20/06 10:00","F3":"20/06 21:00","F4":"25/06 16:00","F5":"25/06 16:00",
+"G0":"15/06 16:00","G1":"15/06 22:00","G2":"21/06 13:00","G3":"21/06 19:00","G4":"26/06 17:00","G5":"26/06 17:00",
+"H0":"15/06 13:00","H1":"15/06 19:00","H2":"21/06 12:00","H3":"21/06 18:00","H4":"26/06 16:00","H5":"26/06 16:00",
+"I0":"16/06 16:00","I1":"16/06 19:00","I2":"22/06 15:00","I3":"22/06 18:00","I4":"26/06 19:00","I5":"26/06 19:00",
+"J0":"16/06 19:00","J1":"16/06 22:00","J2":"22/06 13:00","J3":"22/06 22:00","J4":"27/06 18:00","J5":"27/06 18:00",
+"K0":"17/06 13:00","K1":"17/06 22:00","K2":"23/06 13:00","K3":"23/06 19:00","K4":"27/06 19:00","K5":"27/06 19:00",
+"L0":"17/06 16:00","L1":"17/06 19:00","L2":"23/06 16:00","L3":"23/06 19:00","L4":"27/06 16:00","L5":"27/06 16:00"
 };
 
-// STORAGE
 function save(k,v){localStorage.setItem(k,v);}
 function get(k){return localStorage.getItem(k)||"";}
 
-// CALCULAR TABELA
 function calcularTabela(times,grupoId){
     let tabela={};
-    times.forEach(t=>{tabela[t]={pts:0,gp:0,gc:0};});
+    times.forEach(t=>tabela[t]={pts:0,gp:0,gc:0});
 
-    let jogos=jogosFixos[grupoId] || [];
+    let jogos=jogosFixos[grupoId];
 
     jogos.forEach((j,i)=>{
         let a=parseInt(get(grupoId+i+"a"));
@@ -193,10 +174,7 @@ function calcularTabela(times,grupoId){
 
             if(a>b) tabela[j[0]].pts+=3;
             else if(b>a) tabela[j[1]].pts+=3;
-            else{
-                tabela[j[0]].pts+=1;
-                tabela[j[1]].pts+=1;
-            }
+            else{tabela[j[0]].pts++; tabela[j[1]].pts++;}
         }
     });
 
@@ -206,21 +184,14 @@ function calcularTabela(times,grupoId){
     );
 }
 
-// RENDER
 let app=document.getElementById("app");
 let num=1;
 
 for(let g in grupos){
 
-    let times=grupos[g];
-    let jogos=jogosFixos[g];
-
-    if(!jogos) continue; // só mostra grupos definidos corretamente
-
     app.innerHTML+=`<div class="section"><h2>Grupo ${g}</h2>`;
 
-    jogos.forEach((j,i)=>{
-
+    jogosFixos[g].forEach((j,i)=>{
         let id=g+i;
 
         app.innerHTML+=`
@@ -230,10 +201,8 @@ for(let g in grupos){
                 <span class="hora">📅 ${agenda[id]}</span>
             </span>
             <span>
-                <input value="${get(id+'a')}" 
-                onchange="save('${id}a',this.value);location.reload()"> x
-                <input value="${get(id+'b')}" 
-                onchange="save('${id}b',this.value);location.reload()">
+                <input value="${get(id+'a')}" onchange="save('${id}a',this.value);location.reload()"> x
+                <input value="${get(id+'b')}" onchange="save('${id}b',this.value);location.reload()">
             </span>
         </div>
         `;
@@ -241,37 +210,18 @@ for(let g in grupos){
         num++;
     });
 
-    let classif=calcularTabela(times,g);
+    let classif=calcularTabela(grupos[g],g);
 
-    let htmlTabela = `
-    <table>
-    <thead>
-        <tr>
-            <th>Time</th>
-            <th>Pontos</th>
-            <th>Saldo</th>
-        </tr>
-    </thead>
-    <tbody>
-    `;
+    let tabela=`<table><thead><tr><th>Time</th><th>Pontos</th><th>Saldo</th></tr></thead><tbody>`;
 
-    for(let i=0;i<classif.length;i++){
-        let nome = classif[i][0];
-        let dados = classif[i][1];
-        let saldo = dados.gp - dados.gc;
+    classif.forEach((c,i)=>{
+        let saldo=c[1].gp-c[1].gc;
+        tabela+=`<tr class="${i<2?'top':''}"><td>${c[0]}</td><td>${c[1].pts}</td><td>${saldo}</td></tr>`;
+    });
 
-        htmlTabela += `
-        <tr class="${i<2?'top':''}">
-            <td>${nome}</td>
-            <td>${dados.pts}</td>
-            <td>${saldo}</td>
-        </tr>
-        `;
-    }
-
-    htmlTabela += `</tbody></table>`;
-    app.innerHTML += htmlTabela;
-    app.innerHTML += `</div>`;
+    tabela+=`</tbody></table>`;
+    app.innerHTML+=tabela;
+    app.innerHTML+=`</div>`;
 }
 
 </script>
